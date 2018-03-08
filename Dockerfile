@@ -5,7 +5,7 @@ LABEL maintainer mittell@gmail.com, reuben.stump@gmail.com, ybaltouski@gmail.com
 
 WORKDIR /opt
 
-ENV ANSIBLE_TOWER_VER 3.2.1
+ENV ANSIBLE_TOWER_VER 3.2.3
 ENV PG_DATA /var/lib/postgresql/9.6/main
 ENV AWX_PROJECTS /var/lib/awx/projects
 
