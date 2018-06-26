@@ -5,11 +5,14 @@ LABEL maintainer mittell@gmail.com, reuben.stump@gmail.com, ybaltouski@gmail.com
 
 WORKDIR /opt
 
-ENV ANSIBLE_TOWER_VER 3.2.1
+ENV ANSIBLE_TOWER_VER 3.2.5
 ENV PG_DATA /var/lib/postgresql/9.6/main
 ENV AWX_PROJECTS /var/lib/awx/projects
 
-RUN apt-get update
+RUN apt-get update \
+    && apt-get upgrade -y  \
+    && apt-get install -y locales \
+    && apt-get install -y software-properties-common apt-transport-https ca-certificates
 
 # Set locale
 RUN locale-gen "en_US.UTF-8" \
@@ -17,10 +20,8 @@ RUN locale-gen "en_US.UTF-8" \
 	&& dpkg-reconfigure locales
 
 # Use python >= 2.7.9
-RUN apt-get install -y software-properties-common \
-	&& apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
-	&& apt-key adv --keyserver keyserver.ubuntu.com --recv 5BB92C09DB82666C \
-	&& apt-get update
+RUN apt-add-repository -y ppa:fkrull/deadsnakes-python2.7 \
+	&& apt-key adv --keyserver keyserver.ubuntu.com --recv 5BB92C09DB82666C
 	
 # Install libpython2.7; missing dependency in Tower setup
 RUN apt-get install -y libpython2.7
